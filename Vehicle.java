@@ -58,6 +58,12 @@ public abstract class Vehicle implements Movable{
         return color;
     }
 
+    public Point getPosition(){
+        Point pt =  new Point();
+        pt.setLocation(x, y);
+        return pt;
+    }
+
     public double getX(){
         return x;
     }
