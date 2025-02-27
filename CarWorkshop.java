@@ -1,12 +1,19 @@
+import java.awt.Point;
 import java.util.ArrayList;
 
-public abstract class CarWorkshop<T extends Car> {
+public class CarWorkshop<T extends Car> {
     private int maxCars;
     private ArrayList<T> cars;
+    private Point position;
     
-    public CarWorkshop(int maxCars){
+    public CarWorkshop(int maxCars, Point position){
         this.maxCars = maxCars;
         cars = new ArrayList<T>();
+        this.position = position;
+    }
+
+    public Point getPosition(){
+        return position;
     }
 
     public ArrayList<T> getCars(){

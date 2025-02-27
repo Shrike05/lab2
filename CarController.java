@@ -1,4 +1,6 @@
 import javax.swing.*;
+
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,6 +24,8 @@ public class CarController {
     CarView frame;
     // A list of cars, modify if needed
     ArrayList<Vehicle> cars = new ArrayList<Vehicle>();
+
+    CarWorkshop<Volvo240> volvoWorkshop = new CarWorkshop<Volvo240>(4, new Point(0,300));
 
     // methods:
 
@@ -70,6 +74,12 @@ public class CarController {
                 }else if(y < 0){
                     car.turnLeft();
                     car.turnLeft();
+                }
+
+                if(car.getPosition().distance(volvoWorkshop.getPosition()) < 10 && car instanceof Volvo240){
+                    volvoWorkshop.addCar((Volvo240) car);
+                    cars.remove(i);
+                    frame.drawPanel.carImages.remove(i);
                 }
 
                 // repaint() calls the paintComponent method of the panel
