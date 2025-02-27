@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -14,7 +13,6 @@ public class DrawPanel extends JPanel {
     private static final String[] carImagePaths = { "pics/Volvo240.jpg", "pics/Saab95.jpg", "pics/Scania.jpg" };
     private static final Point[] carPoints = {new Point(), new Point(), new Point()};
 
-    // Just a single image, TODO: Generalize
     ArrayList<BufferedImage> carImages;
     BufferedImage volvoImage;
     // To keep track of a single car's position
@@ -23,7 +21,6 @@ public class DrawPanel extends JPanel {
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(0, 300);
 
-    // TODO: Make this general for all cars
     void moveit(int x, int y, int i) {
         carPoints[i].x = x;
         carPoints[i].y = y;
