@@ -115,4 +115,36 @@ public class CarController {
             car.stopEngine();
         }
     }
+
+    void turboOn(){
+        for (Vehicle car : cars) {
+            if(car instanceof Saab95){
+                ((Saab95)car).setTurboOn();
+            }
+        }
+    }
+
+    void turboOff(){
+        for (Vehicle car : cars) {
+            if(car instanceof Saab95){
+                ((Saab95)car).setTurboOff();
+            }
+        }
+    }
+
+    void raiseRamp(float amount){
+        for (Vehicle car : cars) {
+            if(car instanceof Scania){
+                ((Scania)car).raiseRamp(amount);
+            }
+        }
+    }
+
+    void lowerRamp(float amount){
+        for (Vehicle car : cars) {
+            if(car instanceof Scania){
+                ((Scania)car).lowerRamp(amount);
+            }
+        }
+    }
 }
