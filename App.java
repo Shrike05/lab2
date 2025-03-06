@@ -8,7 +8,7 @@ public class App {
 
         CarView frame = new CarView("CarSim 1.0", cc);
 
-        ModelFacade modelFacade = new ModelFacade(cc.cars, cc.volvoWorkshop, frame);
+        ModelFacade modelFacade = new ModelFacade(cc, frame);
 
         Timer timer = new Timer(50, new TimerListener(modelFacade));
         // Start the timer

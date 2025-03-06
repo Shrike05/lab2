@@ -1,19 +1,17 @@
 import java.util.ArrayList;
 
 public class ModelFacade {
-    ArrayList<Vehicle> cars;
-    CarWorkshop<Volvo240> volvoWorkshop;
+    CarController cc;
     CarView frame;
 
-    public ModelFacade(ArrayList<Vehicle> cars, CarWorkshop<Volvo240> volvoWorkshop, CarView frame){
-        this.cars = cars;
-        this.volvoWorkshop = volvoWorkshop;
+    public ModelFacade(CarController cc, CarView frame){
+        this.cc = cc;
         this.frame = frame;
     }
     
     public void gameLoop(){
-        for (int i = 0; i < cars.size(); i++) {
-            Vehicle car = cars.get(i);
+        for (int i = 0; i < cc.cars.size(); i++) {
+            Vehicle car = cc.cars.get(i);
 
             car.move();
             int x = (int) Math.round(car.getPosition().getX());
@@ -34,14 +32,14 @@ public class ModelFacade {
                 car.turnLeft();
             }
 
-            if(car.getPosition().distance(volvoWorkshop.getPosition()) < 10 && car instanceof Volvo240){
-                volvoWorkshop.addCar((Volvo240) car);
-                cars.remove(i);
-                frame.drawPanel.carImages.remove(i);
+            if(car.getPosition().distance(cc.volvoWorkshop.getPosition()) < 10 && car instanceof Volvo240){
+                cc.volvoWorkshop.addCar((Volvo240) car);
+                cc.cars.remove(i);
+                frame.drawPanel.removeCar(i);
             }
 
-            // repaint() calls the paintComponent method of the panel
-            frame.drawPanel.repaint();
         }
+        // repaint() calls the paintComponent method of the panel
+        frame.drawPanel.repaint();
     }
 }

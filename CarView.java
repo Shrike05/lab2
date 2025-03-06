@@ -4,6 +4,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
+import java.util.random.*;;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -34,6 +36,8 @@ public class CarView extends JFrame{
     JButton turboOffButton = new JButton("Saab Turbo off");
     JButton liftBedButton = new JButton("Scania Lift Bed");
     JButton lowerBedButton = new JButton("Lower Lift Bed");
+    JButton addCarButton = new JButton("Add Car");
+    JButton removeCarButton = new JButton("Kill Car");
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
@@ -46,14 +50,14 @@ public class CarView extends JFrame{
 
     // Sets everything in place and fits everything
     private void initComponents(String title) {
+        CarFactory[] factories = {new VolvoFactory(), new SaabFactory(), new ScaniaFactory()};
+        Random rand = new Random();
 
         this.setTitle(title);
         this.setPreferredSize(new Dimension(X,Y));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
         this.add(drawPanel);
-
-
 
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
@@ -81,6 +85,8 @@ public class CarView extends JFrame{
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
+        controlPanel.add(addCarButton, 6);
+        controlPanel.add(removeCarButton, 7);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -154,6 +160,22 @@ public class CarView extends JFrame{
             }
         });
 
+        addCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Vehicle newCar = factories[ rand.nextInt(factories.length) ].createCar();
+                addCar(newCar);
+            }
+        });
+
+        removeCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                removeCar();
+            }
+        });
+
+
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
 
@@ -165,5 +187,23 @@ public class CarView extends JFrame{
         this.setVisible(true);
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void addCar(Vehicle car){
+        if(carC.cars.size() >= 10){
+            return;
+        }
+        
+        carC.addCar(car);
+        drawPanel.addCar(car);
+    }
+
+    public void removeCar(){
+        if(carC.cars.size() == 0){
+            return;
+        }
+
+        carC.removeCar(carC.cars.size()-1);
+        drawPanel.removeCar(drawPanel.carImages.size()-1);
     }
 }

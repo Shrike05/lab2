@@ -15,15 +15,27 @@ public class CarController {
     public CarWorkshop<Volvo240> volvoWorkshop = new CarWorkshop<Volvo240>(4, new Point(0,300));
 
     public CarController(){
-        cars.add(new Volvo240());
+        SaabFactory saabFactory = new SaabFactory(); 
+        VolvoFactory volvoFactory = new VolvoFactory(); 
+        ScaniaFactory scaniaFactory = new ScaniaFactory(); 
+        
+        cars.add(volvoFactory.createCar());
 
-        Saab95 saab = new Saab95();
+        Saab95 saab = saabFactory.createCar();
         saab.setY(100);
         cars.add(saab);
         
-        Scania scania = new Scania();
+        Scania scania = scaniaFactory.createCar();
         scania.setY(200);
         cars.add(scania);
+    }
+
+    public void addCar(Vehicle car){
+        cars.add(car);
+    }
+
+    public void removeCar(int i){
+        cars.remove(i);
     }
 
     // Calls the gas method for each car once
