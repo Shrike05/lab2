@@ -4,5 +4,10 @@ public class ScaniaRampHightened implements ScaniaState {
         System.out.println("Run");
         scania.startEngine();
     }
+
+    @Override
+    public void move(Scania scania) {
+        scania.move();
+    }
     
 }

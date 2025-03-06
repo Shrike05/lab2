@@ -37,6 +37,10 @@ public class Scania extends Truck implements RampInterface{
         ramp.setRampAngle(angle);
         state = new ScaniaRampLowered();
     }
+
+    public void move(){
+        state.move(this);
+    }
     
     public void startEngine(){
         state.startEngine(this);
