@@ -16,7 +16,7 @@ public class DrawPanel extends JPanel {
     ArrayList<BufferedImage> carImages = new ArrayList<BufferedImage>();
 
     BufferedImage volvoWorkshopImage;
-    Point volvoWorkshopPoint = new Point(0, 300);
+    Point volvoWorkshopPoint = new Point(300, 300);
 
     void moveit(int x, int y, int i) {
         carPoints.get(i).x = x;

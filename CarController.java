@@ -1,47 +1,48 @@
-import java.awt.Point;
-import java.util.ArrayList;
+import java.util.Random;
 
 /*
 * This class represents the Controller part in the MVC pattern.
 * It's responsibilities is to listen to the View and responds in a appropriate manner by
 * modifying the model state and the updating the view.
  */
-
 public class CarController {
     // member fields:
     // A list of cars, modify if needed
-    public ArrayList<Vehicle> cars = new ArrayList<Vehicle>();
+    private ModelFacade model;
+    private DrawPanel drawPanel;
+    private CarFactory[] factories = {new VolvoFactory(), new SaabFactory(), new ScaniaFactory()};
 
-    public CarWorkshop<Volvo240> volvoWorkshop = new CarWorkshop<Volvo240>(4, new Point(0,300));
-
-    public CarController(){
-        SaabFactory saabFactory = new SaabFactory(); 
-        VolvoFactory volvoFactory = new VolvoFactory(); 
-        ScaniaFactory scaniaFactory = new ScaniaFactory(); 
-        
-        cars.add(volvoFactory.createCar());
-
-        Saab95 saab = saabFactory.createCar();
-        saab.setY(100);
-        cars.add(saab);
-        
-        Scania scania = scaniaFactory.createCar();
-        scania.setY(200);
-        cars.add(scania);
+    public CarController(ModelFacade model, DrawPanel drawPanel){
+        this.model = model;
+        this.drawPanel = drawPanel;
     }
 
-    public void addCar(Vehicle car){
-        cars.add(car);
+    public void addCar(){
+        if(model.cars.size() >= 10){
+            return;
+        }
+
+        Random rand = new Random();
+
+        Vehicle newCar = factories[ rand.nextInt(factories.length) ].createCar();
+        
+        model.cars.add(newCar);
+        drawPanel.addCar(newCar);
     }
 
-    public void removeCar(int i){
-        cars.remove(i);
+    public void removeCar(){
+        if(model.cars.size() == 0){
+            return;
+        }
+
+        model.cars.remove(model.cars.size()-1);
+        drawPanel.removeCar(drawPanel.carImages.size()-1);
     }
 
     // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
-        for (Vehicle car : cars) {
+        for (Vehicle car : model.cars) {
             car.gas(gas);
         }
     }
@@ -49,25 +50,25 @@ public class CarController {
     // Calls the gas method for each car once
     void brake(int amount) {
         double brake = ((double) amount) / 100;
-        for (Vehicle car : cars) {
+        for (Vehicle car : model.cars) {
             car.brake(brake);
         }
     }
 
     void start() {
-        for (Vehicle car : cars) {
+        for (Vehicle car : model.cars) {
             car.startEngine();
         }
     }
 
     void stop() {
-        for (Vehicle car : cars) {
+        for (Vehicle car : model.cars) {
             car.stopEngine();
         }
     }
 
     void turboOn(){
-        for (Vehicle car : cars) {
+        for (Vehicle car : model.cars) {
             if(car instanceof Saab95){
                 ((Saab95)car).setTurboOn();
             }
@@ -75,7 +76,7 @@ public class CarController {
     }
 
     void turboOff(){
-        for (Vehicle car : cars) {
+        for (Vehicle car : model.cars) {
             if(car instanceof Saab95){
                 ((Saab95)car).setTurboOff();
             }
@@ -83,7 +84,7 @@ public class CarController {
     }
 
     void raiseRamp(float amount){
-        for (Vehicle car : cars) {
+        for (Vehicle car : model.cars) {
             if(car instanceof Scania){
                 ((Scania)car).raiseRamp(amount);
             }
@@ -91,7 +92,7 @@ public class CarController {
     }
 
     void lowerRamp(float amount){
-        for (Vehicle car : cars) {
+        for (Vehicle car : model.cars) {
             if(car instanceof Scania){
                 ((Scania)car).lowerRamp(amount);
             }
