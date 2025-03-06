@@ -1,7 +1,7 @@
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class ModelFacade {
+public class ModelFacade implements TimerObserver{
     public ArrayList<Vehicle> cars = new ArrayList<Vehicle>();
 
     public CarWorkshop<Volvo240> volvoWorkshop = new CarWorkshop<Volvo240>(4, new Point(300,300));
@@ -55,9 +55,10 @@ public class ModelFacade {
                 cars.remove(i);
                 frame.removeCar(i);
             }
-
         }
-        // repaint() calls the paintComponent method of the panel
-        frame.repaint();
+    }
+
+    public void update(){
+        gameLoop();
     }
 }

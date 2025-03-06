@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 public class App {
@@ -12,7 +14,11 @@ public class App {
 
         new CarView("CarSim 1.0", cc, drawPanel);
 
-        Timer timer = new Timer(50, new TimerListener(modelFacade));
+        ArrayList<TimerObserver> observers = new ArrayList<>();
+        observers.add(modelFacade);
+        observers.add(drawPanel);
+
+        Timer timer = new Timer(50, new TimerListener(observers));
         // Start the timer
         timer.start();
     }

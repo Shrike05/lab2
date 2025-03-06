@@ -1,10 +1,12 @@
 import java.awt.*;
 
-public class Scania extends Truck {
+public class Scania extends Truck implements RampInterface{
 
     private Ramp ramp;
+    private ScaniaState state;
 
     public Scania(){
+        state = new ScaniaRampHightened();
         ramp = new Ramp(0, 70, 0);
 
         setNrDoors(2);
@@ -24,6 +26,7 @@ public class Scania extends Truck {
         }
 
         ramp.setRampAngle(angle);
+        state = new ScaniaRampHightened();
     }
 
     public void lowerRamp(double angle){
@@ -32,13 +35,10 @@ public class Scania extends Truck {
         }
 
         ramp.setRampAngle(angle);
+        state = new ScaniaRampLowered();
     }
     
     public void startEngine(){
-        if(ramp.getRampAngle() > 0){
-            throw new IllegalStateException("Cannot start the car whilst the ramp is heightened");
-        }
-
-        super.startEngine();
+        state.startEngine(this);
     }
 }

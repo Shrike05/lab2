@@ -1,14 +1,17 @@
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class TimerListener implements ActionListener {
-    ModelFacade modelFacade;
+    public ArrayList<TimerObserver> observers;
 
-    public TimerListener(ModelFacade modelFacade){
-        this.modelFacade = modelFacade;
+    public TimerListener(ArrayList<TimerObserver> observers){
+        this.observers = observers;
     }
 
     public void actionPerformed(ActionEvent e) {
-        modelFacade.gameLoop();
+        for (TimerObserver timerObserver : observers) {
+            timerObserver.update();
+        }
     }
 }

@@ -8,7 +8,7 @@ import javax.swing.*;
 
 // This panel represents the animated part of the view with the car images.
 
-public class DrawPanel extends JPanel {
+public class DrawPanel extends JPanel implements TimerObserver{
 
     private static final String[] carImagePaths = { "pics/Volvo240.jpg", "pics/Saab95.jpg", "pics/Scania.jpg" };
     private ArrayList<Point> carPoints = new ArrayList<Point>();
@@ -21,6 +21,10 @@ public class DrawPanel extends JPanel {
     void moveit(int x, int y, int i) {
         carPoints.get(i).x = x;
         carPoints.get(i).y = y;
+    }
+
+    public void update(){
+        repaint();
     }
 
     // Initializes the panel and reads the images
